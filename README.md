@@ -13,7 +13,7 @@ Compteur de passagers avec sauvegarde des totaux.
 Tableau de score pour deux équipes (+1 / +2 / +3, reset).
 **Concepts :** paramètres de fonction, factorisation, fonctions fléchées.
 
-### 3. 🃏 Blackjack (`04-blackjack`)
+### 3.  Blackjack (`04-blackjack`)
 Jeu de Blackjack jouable (cartes aléatoires, somme, gain/perte).
 **Concepts :** booléens, conditions, tableaux, boucles, `Math.random()`,
 opérateurs logiques, objets et méthodes.

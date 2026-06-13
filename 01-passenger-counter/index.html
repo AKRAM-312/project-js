@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Passenger Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #5f259f;
+            color: white;
+            text-align: center;
+            padding-top: 60px;
+        }
+        h2 { font-size: 60px; margin: 0; }
+        #count-el { font-size: 80px; }
+        button {
+            font-size: 18px;
+            padding: 12px 30px;
+            margin: 8px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #save-el { margin-top: 30px; font-size: 20px; }
+    </style>
+</head>
+<body>
+
+    <h2>Passagers</h2>
+    <h2 id="count-el">0</h2>
+
+    <button id="increment-btn">INCREMENT</button>
+    <button id="save-btn">SAVE</button>
+    <h1>Bus précédent:</h1>
+    <p id="save-el"></p>
+
+    <!-- C'est ici qu'on branche notre JavaScript -->
+    <script src="index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Dépendances (si un jour tu utilises npm)
+node_modules/
+
+# Fichiers d'éditeur
+.vscode/
+*.log

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Basketball Scoreboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1b244b;
+            color: white;
+            text-align: center;
+            padding-top: 40px;
+        }
+        .board { display: flex; justify-content: center; gap: 60px; }
+        .team h2 { margin-bottom: 4px; }
+        .score { font-size: 90px; color: #f94f6d; margin: 0; }
+        button {
+            display: block;
+            width: 130px;
+            margin: 8px auto;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #reset-btn {
+            margin-top: 40px;
+            background: #f94f6d;
+            color: white;
+            width: 160px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="board">
+        <div class="team">
+            <h2>DOMICILE</h2>
+            <p id="home-score" class="score">0</p>
+            <button id="home-1">+1</button>
+            <button id="home-2">+2</button>
+            <button id="home-3">+3</button>
+        </div>
+
+        <div class="team">
+            <h2>VISITEUR</h2>
+            <p id="guest-score" class="score">0</p>
+            <button id="guest-1">+1</button>
+            <button id="guest-2">+2</button>
+            <button id="guest-3">+3</button>
+        </div>
+    </div>
+
+    <button id="reset-btn">RESET</button>
+
+    <script src="index.js"></script>
+
+</body>
+</html>

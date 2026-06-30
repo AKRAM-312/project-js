@@ -74,15 +74,22 @@ loginBtn.addEventListener("click" , login);
 
 
 // state change block 
-onAuthStateChanged(auth , function(user){
-    if(user){
-        authView.style.display = "none";    // cacher
-        chatView.style.display = "block";   // montrer
-    }else{
+let ecouteLancee=false;
+
+    onAuthStateChanged(auth , function(user){
+        if(user){
+            authView.style.display = "none";    // cacher
+            chatView.style.display = "block";  // montrer
+            if(!ecouteLancee){         
+                ecouteLancee = true;
+                ecouterMessages();
+             }   
+        }else{
         authView.style.display = "block";    
         chatView.style.display = "none";   
-    }
-})  
+         }   
+    })  
+
 
 
 // log out block
@@ -121,21 +128,22 @@ messageEl.addEventListener("keydown", function(event){
 
 // en cas t'as une co de merde
 messagesEl.innerHTML = `<div class="empty-state"><span class="emoji">⏳</span><div class="sub">Chargement des messages...</div></div>`;
-
-onValue(messagesInDB , function(snapshot){
-    let data = snapshot.val();
-    if(data){ 
-        let messages = Object.values(data);
-        let string ="";
-        for(let i=0 ; i<messages.length ; i++){
-            let classe="msg";
-            if(messages[i].auteur === (auth.currentUser.displayName || auth.currentUser.email) ){
-                classe="msg mine";
-        }
-        string+=`<div class="${classe}"><span class="author">${messages[i].auteur}   ${messages[i].heure}</span>${messages[i].texte}</div>`
-                    }
-        messagesEl.innerHTML=string;
-    }else{
+function ecouterMessages(){ 
+    onValue(messagesInDB , function(snapshot){
+        let data = snapshot.val();
+        if(data){ 
+            let messages = Object.values(data);
+            let string ="";
+            for(let i=0 ; i<messages.length ; i++){
+                let classe="msg";
+                if(messages[i].auteur === (auth.currentUser.displayName || auth.currentUser.email) ){
+                    classe="msg mine";
+                }
+            string+=`<div class="${classe}"><span class="author">${messages[i].auteur}   ${messages[i].heure}</span>${messages[i].texte}</div>`
+            }
+            messagesEl.innerHTML=string;
+        }else{
         messagesEl.innerHTML=`<div class="empty-state"><span class="emoji">👋</span><div class="title">C'est tout calme ici...</div><div class="sub">Sois le premier à lancer la conversation !</div></div>`;
-    }
-})
+        }
+    })
+}

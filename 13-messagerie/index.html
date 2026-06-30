@@ -4,50 +4,280 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background:#0b141a; color:white; max-width:440px; margin:0 auto; padding:20px; }
-        h1 { text-align:center; }
-        input { width:100%; padding:11px; margin-bottom:10px; border:none; border-radius:6px; font-size:15px; }
-        button { padding:11px 16px; border:none; border-radius:6px; cursor:pointer; font-size:15px; font-weight:bold; }
-        .primary { background:#00a884; color:white; width:100%; margin-bottom:8px; }
-        .secondary { background:#2a3942; color:white; width:100%; }
-        #error-el { color:#ff6b6b; min-height:20px; font-size:14px; text-align:center; }
+        :root {
+            --bg: #0f1117;
+            --surface: #161925;
+            --bubble: #1c1f2e;
+            --bubble-border: #262a3d;
+            --accent: #6d5dfc;
+            --accent-2: #8b7bff;
+            --text: #e8e9ed;
+            --text-dim: #8b8fa3;
+            --danger: #ff6b6b;
+        }
 
-        /* Écran de chat (caché au départ) */
-        #chat-view { display:none; }
-        #messages-el { height:340px; overflow-y:auto; background:#111b21; border-radius:8px; padding:10px; margin-bottom:10px; }
-        .msg { background:#202c33; padding:8px 10px; border-radius:6px; margin-bottom:6px; max-width:80%; }
-        .msg .author { color:#00a884; font-size:13px; font-weight:bold; }
-        /* Mes propres messages : alignés à droite, couleur différente */
-        .msg.mine { background:#005c4b; margin-left:auto; }
-        .send-row { display:flex; gap:6px; }
-        .send-row input { margin-bottom:0; }
-        #logout-btn { background:#2a3942; color:white; margin-top:10px; width:100%; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background:
+                radial-gradient(900px 500px at 80% -10%, rgba(109,93,252,0.14), transparent 60%),
+                var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* ===================== AUTH ===================== */
+        #auth-view {
+            width: 100%;
+            max-width: 380px;
+            animation: fadeUp 0.5s ease-out;
+        }
+        .auth-card {
+            background: var(--surface);
+            border: 1px solid var(--bubble-border);
+            border-radius: 20px;
+            padding: 32px 26px;
+        }
+        .auth-card h1 {
+            font-size: 26px;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        .auth-sub {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .auth-card input {
+            width: 100%;
+            padding: 13px 15px;
+            margin-bottom: 12px;
+            background: #11131c;
+            border: 1px solid var(--bubble-border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .auth-card input::placeholder { color: #5c6075; }
+        .auth-card input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(109,93,252,0.18);
+        }
+
+        button {
+            font-family: 'Space Grotesk', sans-serif;
+            cursor: pointer;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: transform 0.12s ease, background 0.2s ease, opacity 0.2s;
+        }
+        button:active { transform: scale(0.97); }
+
+        .primary {
+            width: 100%;
+            padding: 13px;
+            margin-top: 4px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent), #4a3fd6);
+            color: white;
+            border-radius: 12px;
+        }
+        .primary:hover { background: linear-gradient(135deg, var(--accent-2), #5a4ee6); }
+
+        .secondary {
+            width: 100%;
+            padding: 13px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--bubble-border);
+            border-radius: 12px;
+        }
+        .secondary:hover { background: #1d2030; }
+
+        #error-el {
+            color: var(--danger);
+            min-height: 20px;
+            font-size: 13.5px;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* ===================== CHAT ===================== */
+        #chat-view {
+            display: none;
+            width: 100%;
+            max-width: 440px;
+            height: min(86vh, 720px);
+            background: var(--surface);
+            border: 1px solid var(--bubble-border);
+            border-radius: 20px;
+            overflow: hidden;
+            flex-direction: column;
+            animation: fadeUp 0.4s ease-out;
+        }
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--bubble-border);
+            background: #13151f;
+        }
+        .chat-header h1 { font-size: 19px; }
+        #logout-btn {
+            padding: 8px 14px;
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--bubble-border);
+            border-radius: 10px;
+            font-size: 13px;
+        }
+        #logout-btn:hover { color: var(--text); background: #1d2030; }
+
+        #messages-el {
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        #messages-el::-webkit-scrollbar { width: 7px; }
+        #messages-el::-webkit-scrollbar-thumb { background: #2a2e42; border-radius: 10px; }
+
+        .empty-state {
+            margin: auto;
+            text-align: center;
+            color: var(--text-dim);
+            animation: fadeUp 0.5s ease-out;
+        }
+        .empty-state .emoji { font-size: 46px; display: block; margin-bottom: 12px; }
+        .empty-state .title { color: var(--text); font-size: 16px; font-weight: 600; margin-bottom: 4px; font-family: 'Space Grotesk', sans-serif; }
+        .empty-state .sub { font-size: 13.5px; }
+
+        .msg {
+            max-width: 78%;
+            padding: 9px 13px;
+            background: var(--bubble);
+            border: 1px solid var(--bubble-border);
+            border-radius: 16px 16px 16px 4px;
+            font-size: 14.5px;
+            line-height: 1.45;
+            word-wrap: break-word;
+            animation: msgIn 0.28s ease-out;
+        }
+        .msg .author {
+            display: block;
+            color: var(--accent-2);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .msg.mine {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--accent), #4a3fd6);
+            border: none;
+            border-radius: 16px 16px 4px 16px;
+        }
+        .msg.mine .author { color: rgba(255,255,255,0.8); }
+
+        .send-row {
+            display: flex;
+            gap: 8px;
+            padding: 14px 16px;
+            border-top: 1px solid var(--bubble-border);
+            background: #13151f;
+        }
+        #message-el {
+            flex: 1;
+            padding: 12px 15px;
+            background: #11131c;
+            border: 1px solid var(--bubble-border);
+            border-radius: 14px;
+            color: var(--text);
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        #message-el::placeholder { color: #5c6075; }
+        #message-el:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(109,93,252,0.18);
+        }
+        #send-btn {
+            width: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent), #4a3fd6);
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #send-btn:hover { background: linear-gradient(135deg, var(--accent-2), #5a4ee6); }
+
+        /* ===================== ANIMATIONS ===================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
     </style>
 </head>
 <body>
 
     <!-- ÉCRAN 1 : Authentification -->
     <div id="auth-view">
-        <h1>💬 Messagerie</h1>
-        <input type="text" id="pseudo-el" placeholder="Pseudo (pour l'inscription)">
-        <input type="email" id="email-el" placeholder="Email">
-        <input type="password" id="password-el" placeholder="Mot de passe">
-        <button id="signup-btn" class="primary">S'inscrire</button>
-        <button id="login-btn" class="secondary">Se connecter</button>
-        <p id="error-el"></p>
+        <div class="auth-card">
+            <h1>💬 Messagerie</h1>
+            <p class="auth-sub">Connecte-toi pour discuter avec tes potes</p>
+            <input type="text" id="pseudo-el" placeholder="Pseudo (pour l'inscription)">
+            <input type="email" id="email-el" placeholder="Email">
+            <input type="password" id="password-el" placeholder="Mot de passe">
+            <button id="signup-btn" class="primary">S'inscrire</button>
+            <button id="login-btn" class="secondary">Se connecter</button>
+            <p id="error-el"></p>
+        </div>
     </div>
 
-    <!-- ÉCRAN 2 : Chat (caché tant qu'on n'est pas connecté) -->
+    <!-- ÉCRAN 2 : Chat -->
     <div id="chat-view">
-        <h1>💬 Chat</h1>
+        <div class="chat-header">
+            <h1>💬 AHHH NONNN</h1>
+            <button id="logout-btn">Déconnexion</button>
+        </div>
         <div id="messages-el"></div>
         <div class="send-row">
             <input type="text" id="message-el" placeholder="Ton message...">
-            <button id="send-btn" class="primary" style="width:auto;">Envoyer</button>
+            <button id="send-btn">➤</button>
         </div>
-        <button id="logout-btn">Se déconnecter</button>
     </div>
 
     <script src="index.js" type="module"></script>

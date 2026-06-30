@@ -97,7 +97,7 @@ logoutBtn.addEventListener("click" , function(){
 const messagesInDB = ref(database, "messages");
 
 
-
+// envoie des messages
 function send(){
     if(messageEl.value.trim()){ 
     push(messagesInDB, {
@@ -110,6 +110,17 @@ function send(){
 }
 
 sendBtn.addEventListener("click" , send);
+messageEl.addEventListener("keydown", function(event){
+    if(event.key === "Enter"){
+        send();
+    }
+});
+
+
+//affiche les messages
+
+// en cas t'as une co de merde
+messagesEl.innerHTML = `<div class="empty-state"><span class="emoji">⏳</span><div class="sub">Chargement des messages...</div></div>`;
 
 onValue(messagesInDB , function(snapshot){
     let data = snapshot.val();
@@ -121,10 +132,10 @@ onValue(messagesInDB , function(snapshot){
             if(messages[i].auteur === (auth.currentUser.displayName || auth.currentUser.email) ){
                 classe="msg mine";
         }
-        string+=`<div class="${classe}"><span class="author">${messages[i].auteur}   ${messages[i].heure}</span><br>${messages[i].texte}</div>`
+        string+=`<div class="${classe}"><span class="author">${messages[i].auteur}   ${messages[i].heure}</span>${messages[i].texte}</div>`
                     }
         messagesEl.innerHTML=string;
     }else{
-        messagesEl.innerHTML="";
+        messagesEl.innerHTML=`<div class="empty-state"><span class="emoji">👋</span><div class="title">C'est tout calme ici...</div><div class="sub">Sois le premier à lancer la conversation !</div></div>`;
     }
 })

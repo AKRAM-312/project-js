@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit Converter</title>
+    <style>
+        body { font-family: Arial, sans-serif; background:#1f2937; color:white; text-align:center; padding:30px; }
+        input { font-size:20px; padding:8px; width:120px; text-align:center; }
+        button { font-size:18px; padding:8px 20px; margin:10px; cursor:pointer; }
+        .card { background:#374151; border-radius:8px; padding:14px; margin:10px auto; max-width:340px; }
+        h3 { margin:0 0 6px; }
+    </style>
+</head>
+<body>
+
+    <h1>Convertisseur d'unités</h1>
+
+    <input type="number" id="input-el" value="20">
+    <button id="convert-btn">Convertir</button>
+
+    <div class="card">
+        <h3>📏 Longueur (mètres / pieds)</h3>
+        <p id="length-el">...</p>
+    </div>
+    <div class="card">
+        <h3>💧 Volume (litres / gallons)</h3>
+        <p id="volume-el">...</p>
+    </div>
+    <div class="card">
+        <h3>⚖️ Masse (kilos / livres)</h3>
+        <p id="mass-el">...</p>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de pourboire</title>
+    <style>
+        body { font-family: Arial, sans-serif; background:#0f172a; color:white; text-align:center; padding:30px; max-width:380px; margin:0 auto; }
+        h1 { font-size:22px; }
+        input { font-size:20px; padding:10px; width:100%; text-align:center; border:none; border-radius:6px; margin-bottom:14px; }
+        button { font-size:18px; padding:10px 18px; margin:5px; border:none; border-radius:6px; cursor:pointer; background:#22c55e; color:white; font-weight:bold; }
+        #result-el { font-size:20px; margin-top:24px; min-height:60px; line-height:1.6; }
+    </style>
+</head>
+<body>
+
+    <h1>💰 Calculateur de pourboire</h1>
+
+    <input type="number" id="bill-el" placeholder="Montant de l'addition (€)">
+
+    <p>Choisis le pourboire :</p>
+    <button id="tip-10">10 %</button>
+    <button id="tip-15">15 %</button>
+    <button id="tip-20">20 %</button>
+
+    <p id="result-el"></p>
+
+    <script src="index.js"></script>
+
+</body>
+</html>

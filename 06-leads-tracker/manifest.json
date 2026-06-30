@@ -1,0 +1,11 @@
+{
+    "manifest_version": 3,
+    "name": "Leads Tracker",
+    "description": "Sauvegarde des liens et l'onglet courant.",
+    "version": "1.0",
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Leads Tracker"
+    },
+    "permissions": ["tabs"]
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messagerie</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background:#0b141a; color:white; max-width:440px; margin:0 auto; padding:20px; }
+        h1 { text-align:center; }
+        input { width:100%; padding:11px; margin-bottom:10px; border:none; border-radius:6px; font-size:15px; }
+        button { padding:11px 16px; border:none; border-radius:6px; cursor:pointer; font-size:15px; font-weight:bold; }
+        .primary { background:#00a884; color:white; width:100%; margin-bottom:8px; }
+        .secondary { background:#2a3942; color:white; width:100%; }
+        #error-el { color:#ff6b6b; min-height:20px; font-size:14px; text-align:center; }
+
+        /* Écran de chat (caché au départ) */
+        #chat-view { display:none; }
+        #messages-el { height:340px; overflow-y:auto; background:#111b21; border-radius:8px; padding:10px; margin-bottom:10px; }
+        .msg { background:#202c33; padding:8px 10px; border-radius:6px; margin-bottom:6px; max-width:80%; }
+        .msg .author { color:#00a884; font-size:13px; font-weight:bold; }
+        /* Mes propres messages : alignés à droite, couleur différente */
+        .msg.mine { background:#005c4b; margin-left:auto; }
+        .send-row { display:flex; gap:6px; }
+        .send-row input { margin-bottom:0; }
+        #logout-btn { background:#2a3942; color:white; margin-top:10px; width:100%; }
+    </style>
+</head>
+<body>
+
+    <!-- ÉCRAN 1 : Authentification -->
+    <div id="auth-view">
+        <h1>💬 Messagerie</h1>
+        <input type="text" id="pseudo-el" placeholder="Pseudo (pour l'inscription)">
+        <input type="email" id="email-el" placeholder="Email">
+        <input type="password" id="password-el" placeholder="Mot de passe">
+        <button id="signup-btn" class="primary">S'inscrire</button>
+        <button id="login-btn" class="secondary">Se connecter</button>
+        <p id="error-el"></p>
+    </div>
+
+    <!-- ÉCRAN 2 : Chat (caché tant qu'on n'est pas connecté) -->
+    <div id="chat-view">
+        <h1>💬 Chat</h1>
+        <div id="messages-el"></div>
+        <div class="send-row">
+            <input type="text" id="message-el" placeholder="Ton message...">
+            <button id="send-btn" class="primary" style="width:auto;">Envoyer</button>
+        </div>
+        <button id="logout-btn">Se déconnecter</button>
+    </div>
+
+    <script src="index.js" type="module"></script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Leads Tracker</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #5f9ea0;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 8px 14px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 4px;
+            margin-bottom: 12px;
+        }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 6px; }
+        li a { color: white; }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="input-el" placeholder="https://exemple.com">
+
+    <button id="input-btn">SAVE INPUT</button>
+    <button id="tab-btn">SAVE TAB</button>
+    <button id="delete-btn">DELETE ALL</button>
+
+    <ul id="ul-el"></ul>
+
+    <script src="index.js"></script>
+
+</body>
+</html>

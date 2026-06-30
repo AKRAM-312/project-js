@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leads Tracker Mobile</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.png">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #5f9ea0;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 14px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 4px;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        ul { list-style: none; padding: 0; }
+        li {
+            background: rgba(255,255,255,0.15);
+            margin-bottom: 6px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="input-el" placeholder="Saisir un lead...">
+
+    <button id="input-btn">SAVE</button>
+    <button id="delete-btn">DELETE ALL</button>
+
+    <ul id="ul-el"></ul>
+
+    <!-- type="module" : nécessaire pour utiliser les imports Firebase -->
+    <script src="index.js" type="module"></script>
+
+</body>
+</html>
